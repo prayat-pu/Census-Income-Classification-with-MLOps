@@ -25,25 +25,32 @@ def measuring_performance_on_sclicing_cencus(df, cat_features, scling_features,
         features name for slicing the dataset.
     -------
     """
-    print(f'performance on slicing features: {scling_features}')
-    for ele in df[scling_features].unique():
-        data = df[df[scling_features] == ele]
 
-        X_test, y_test, _, _ = process_data(
-            data, categorical_features=cat_features,
-            label="salary", training=False, encoder=encoder, lb=lb
-        )
+    with open('./slice_output.txt','w') as f:
+        f.write(f'Performance on slicing features: {scling_features} feaure')
+        f.write('\n')
+    
 
-        y_pred = inference(model, X_test)
+        for ele in df[scling_features].unique():
+            data = df[df[scling_features] == ele]
 
-        precision, recall, f1 = compute_model_metrics(y_test, y_pred)
-        print('-' * 20)
-        print(f'Features Value: {ele}')
-        print(f'total_data: {len(data)}')
-        print(f'Precision: {precision}')
-        print(f'recall: {recall}')
-        print(f'f1: {f1}')
-        print('-' * 20)
+            X_test, y_test, _, _ = process_data(
+                data, categorical_features=cat_features,
+                label="salary", training=False, encoder=encoder, lb=lb
+            )
+
+            y_pred = inference(model, X_test)
+
+            precision, recall, f1 = compute_model_metrics(y_test, y_pred)
+            f.write('-' * 20)
+            f.write('\n')
+            f.write(f'Features Value: {ele}\n')
+            f.write(f'total_data: {len(data)}\n')
+            f.write(f'Precision: {precision}\n')
+            f.write(f'recall: {recall}\n')
+            f.write(f'f1: {f1}\n')
+            f.write('-' * 20)
+            f.write('\n')
 
 
 # Add code to load in the data.
@@ -88,7 +95,7 @@ print(f'precision: {precision}, recall: {recall}, f1: {fbeta}')
 
 # test performance on slicing selected features. -> scling_features =
 # 'education'
-slicing_flag = False
+slicing_flag = True
 if slicing_flag:
     measuring_performance_on_sclicing_cencus(
         test, cat_features, 'education', model, encoder, lb, label='salary')

@@ -1,0 +1,113 @@
+Performance on slicing features: education feaure
+--------------------
+Features Value:  Some-college
+total_data: 1479
+Precision: 0.6747572815533981
+recall: 0.4911660777385159
+f1: 0.5685071574642127
+--------------------
+--------------------
+Features Value:  HS-grad
+total_data: 2092
+Precision: 0.6176470588235294
+recall: 0.40607734806629836
+f1: 0.49000000000000005
+--------------------
+--------------------
+Features Value:  Masters
+total_data: 337
+Precision: 0.8361581920903954
+recall: 0.783068783068783
+f1: 0.808743169398907
+--------------------
+--------------------
+Features Value:  Doctorate
+total_data: 80
+Precision: 0.8333333333333334
+recall: 0.8771929824561403
+f1: 0.8547008547008548
+--------------------
+--------------------
+Features Value:  Bachelors
+total_data: 1080
+Precision: 0.7488479262672811
+recall: 0.7336343115124153
+f1: 0.7411630558722919
+--------------------
+--------------------
+Features Value:  Assoc-acdm
+total_data: 214
+Precision: 0.7804878048780488
+recall: 0.5614035087719298
+f1: 0.653061224489796
+--------------------
+--------------------
+Features Value:  Prof-school
+total_data: 127
+Precision: 0.8785046728971962
+recall: 0.9791666666666666
+f1: 0.9261083743842364
+--------------------
+--------------------
+Features Value:  Assoc-voc
+total_data: 274
+Precision: 0.6739130434782609
+recall: 0.5254237288135594
+f1: 0.5904761904761905
+--------------------
+--------------------
+Features Value:  11th
+total_data: 234
+Precision: 1.0
+recall: 0.3
+f1: 0.4615384615384615
+--------------------
+--------------------
+Features Value:  10th
+total_data: 191
+Precision: 0.5
+recall: 0.2
+f1: 0.28571428571428575
+--------------------
+--------------------
+Features Value:  7th-8th
+total_data: 113
+Precision: 0.5
+recall: 0.16666666666666666
+f1: 0.25
+--------------------
+--------------------
+Features Value:  12th
+total_data: 87
+Precision: 1.0
+recall: 0.3333333333333333
+f1: 0.5
+--------------------
+--------------------
+Features Value:  9th
+total_data: 100
+Precision: 1.0
+recall: 0.0
+f1: 0.0
+--------------------
+--------------------
+Features Value:  5th-6th
+total_data: 59
+Precision: 1.0
+recall: 0.3333333333333333
+f1: 0.5
+--------------------
+--------------------
+Features Value:  Preschool
+total_data: 8
+Precision: 1.0
+recall: 1.0
+f1: 1.0
+--------------------
+--------------------
+Features Value:  1st-4th
+total_data: 33
+Precision: 1.0
+recall: 0.5
+f1: 0.6666666666666666
+--------------------
