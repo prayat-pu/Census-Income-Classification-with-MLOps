@@ -7,7 +7,7 @@ from data import process_data
 from sklearn.model_selection import train_test_split
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='session')
 def data():
     data_path = '../data/census.csv'
 
