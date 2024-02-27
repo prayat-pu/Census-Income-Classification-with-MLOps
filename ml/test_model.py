@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 def data():
     data_path = '../data/census.csv'
 
-    df = pd.read_csv(data_path).drop_duplicates()
+    df = pd.read_csv(data_path,encoding='utf-8').drop_duplicates()
     train, test = train_test_split(df, test_size=0.20)
 
     cat_features = [
