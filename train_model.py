@@ -3,18 +3,16 @@
 from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
-from ml.model import train_model,compute_model_metrics,inference
+from ml.model import train_model, compute_model_metrics, inference
 from ml.data import process_data
 import pandas as pd
 import pickle
 
 
-
-
-def measuring_performance_on_sclicing_cencus(df, cat_features, scling_features, 
+def measuring_performance_on_sclicing_cencus(df, cat_features, scling_features,
                                              model, encoder, lb, label):
     """ Function for measuring performance on slices of the cencus dataset.
-    
+
      Inputs
     ------
     Model : ???
@@ -32,23 +30,20 @@ def measuring_performance_on_sclicing_cencus(df, cat_features, scling_features,
         data = df[df[scling_features] == ele]
 
         X_test, y_test, _, _ = process_data(
-            data, categorical_features=cat_features, 
-            label="salary", training=False,encoder=encoder,lb=lb
+            data, categorical_features=cat_features,
+            label="salary", training=False, encoder=encoder, lb=lb
         )
 
         y_pred = inference(model, X_test)
 
-        precision, recall, f1 = compute_model_metrics(y_test,y_pred)
-        print('-'*20)
+        precision, recall, f1 = compute_model_metrics(y_test, y_pred)
+        print('-' * 20)
         print(f'Features Value: {ele}')
         print(f'total_data: {len(data)}')
         print(f'Precision: {precision}')
         print(f'recall: {recall}')
         print(f'f1: {f1}')
-        print('-'*20)
-
-
-
+        print('-' * 20)
 
 
 # Add code to load in the data.
@@ -56,7 +51,8 @@ data = pd.read_csv('./data/census.csv')
 # add some preprocessing from eda -> we found 23 duplicated rows
 data.drop_duplicates(inplace=True)
 
-# Optional enhancement, use K-fold cross validation instead of a train-test split.
+# Optional enhancement, use K-fold cross validation instead of a
+# train-test split.
 train, test = train_test_split(data, test_size=0.20)
 
 
@@ -78,26 +74,27 @@ X_train, y_train, encoder, lb = process_data(
 
 # Proces the test data with the process_data function.
 X_test, y_test, encoder, lb = process_data(
-    test, categorical_features=cat_features, 
-    label="salary", training=False,encoder=encoder,lb=lb
+    test, categorical_features=cat_features,
+    label="salary", training=False, encoder=encoder, lb=lb
 )
 
 # Train and save a model.
 
-model = train_model(X_train,y_train)
+model = train_model(X_train, y_train)
 y_pred = model.predict(X_test)
-precision, recall, fbeta = compute_model_metrics(y_test,y_pred)
-print(f'Performance for the whole test dataset')
+precision, recall, fbeta = compute_model_metrics(y_test, y_pred)
+print('Performance for the whole test dataset')
 print(f'precision: {precision}, recall: {recall}, f1: {fbeta}')
 
-# test performance on slicing selected features. -> scling_features = 'education'
+# test performance on slicing selected features. -> scling_features =
+# 'education'
 slicing_flag = False
-if slicing_flag == True:
-    measuring_performance_on_sclicing_cencus(test,cat_features,'education',
-                                         model,encoder,lb,label='salary')
+if slicing_flag:
+    measuring_performance_on_sclicing_cencus(
+        test, cat_features, 'education', model, encoder, lb, label='salary')
 
 
 # save model and encoder
-pickle.dump(model, open('./model/trained_model.pkl','wb'))
-pickle.dump(encoder, open('./model/encoder.pkl','wb'))
-pickle.dump(lb, open('./model/lb.pkl','wb'))
+pickle.dump(model, open('./model/trained_model.pkl', 'wb'))
+pickle.dump(encoder, open('./model/encoder.pkl', 'wb'))
+pickle.dump(lb, open('./model/lb.pkl', 'wb'))

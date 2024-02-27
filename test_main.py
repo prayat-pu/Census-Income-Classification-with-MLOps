@@ -1,7 +1,5 @@
 from fastapi.testclient import TestClient
 from main import app
-import requests
-import json
 
 client = TestClient(app)
 
@@ -9,7 +7,8 @@ client = TestClient(app)
 def test_get_path():
     r = client.get('/')
     assert r.status_code == 200
-    assert r.json() == {'greeting':"Welcome to the Census classification API"}
+    assert r.json() == {'greeting': "Welcome to the Census classification API"}
+
 
 def test_post_lessthan50k_case():
     test_data = {
@@ -33,7 +32,7 @@ def test_post_lessthan50k_case():
                     json=test_data)
 
     assert r.status_code == 200
-    assert (r.json() == f'the prediction of this features: <=50k')
+    assert (r.json() == 'the prediction of this features: <=50k')
 
 
 def test_post_greaterthan50k_case():
@@ -58,4 +57,4 @@ def test_post_greaterthan50k_case():
                     json=test_data)
 
     assert r.status_code == 200
-    assert (r.json() == f'the prediction of this features: >50k')
+    assert (r.json() == 'the prediction of this features: >50k')

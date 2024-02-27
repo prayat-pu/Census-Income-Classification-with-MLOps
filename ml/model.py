@@ -19,14 +19,15 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
     model = RandomForestClassifier(random_state=0)
-    model.fit(X_train,y_train)
+    model.fit(X_train, y_train)
 
     return model
 
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model
+    using precision, recall, and F1.
 
     Inputs
     ------
@@ -61,5 +62,3 @@ def inference(model, X):
         Predictions from the model.
     """
     return model.predict(X)
-
-
