@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 
 @pytest.fixture(scope='session')
 def data():
-    data_path = os.getcwd()[:-2] + '\\data\\census.csv'
+    data_path = os.getcwd()[:-2] + '/data/census.csv'
 
     df = pd.read_csv(data_path,encoding='utf-8').drop_duplicates()
     train, test = train_test_split(df, test_size=0.20)
