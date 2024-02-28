@@ -19,7 +19,7 @@ test_data1 = {
 }
 
 response1 = requests.post(
-    'http://127.0.0.1:8000/predict/',
+    'https://census-income-classification-with-mlops.onrender.com/predict/',
     data=json.dumps(test_data1))
 print('status code: ', response1.status_code)
 print(response1.json())
@@ -43,7 +43,7 @@ test_data2 = {
 }
 
 response2 = requests.post(
-    'http://127.0.0.1:8000/predict/',
+    'https://census-income-classification-with-mlops.onrender.com/predict/',
     data=json.dumps(test_data2))
 print('status code: ', response2.status_code)
 print(response2.json())
