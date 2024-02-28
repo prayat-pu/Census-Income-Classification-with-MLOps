@@ -28,7 +28,7 @@ def test_post_lessthan50k_case():
         'native-country': ' United-States'
     }
 
-    r = client.post('/features/',
+    r = client.post('/predict/',
                     json=test_data)
 
     assert r.status_code == 200
@@ -53,7 +53,7 @@ def test_post_greaterthan50k_case():
         'native-country': ' United-States'
     }
 
-    r = client.post('/features/',
+    r = client.post('/predict/',
                     json=test_data)
 
     assert r.status_code == 200
