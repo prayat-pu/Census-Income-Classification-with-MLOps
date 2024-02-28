@@ -1,13 +1,12 @@
 from fastapi.testclient import TestClient
 from main import app
 
-client = TestClient(app)
-
 
 def test_get_path():
-    r = client.get('/')
-    assert r.status_code == 200
-    assert r.json() == {'greeting': "Welcome to the Census classification API"}
+    with TestClient(app) as client:
+        r = client.get('/')
+        assert r.status_code == 200
+        assert r.json() == {'greeting': "Welcome to the Census classification API"}
 
 
 def test_post_lessthan50k_case():
@@ -28,11 +27,12 @@ def test_post_lessthan50k_case():
         'native-country': ' United-States'
     }
 
-    r = client.post('/predict/',
-                    json=test_data)
+    with TestClient(app) as client:
+        r = client.post('/predict/',
+                        json=test_data)
 
-    assert r.status_code == 200
-    assert (r.json() == 'the prediction of this features: <=50k')
+        assert r.status_code == 200
+        assert (r.json() == 'the prediction of this features: <=50k')
 
 
 def test_post_greaterthan50k_case():
@@ -53,8 +53,9 @@ def test_post_greaterthan50k_case():
         'native-country': ' United-States'
     }
 
-    r = client.post('/predict/',
-                    json=test_data)
+    with TestClient(app) as client:
+        r = client.post('/predict/',
+                        json=test_data)
 
-    assert r.status_code == 200
-    assert (r.json() == 'the prediction of this features: >50k')
+        assert r.status_code == 200
+        assert (r.json() == 'the prediction of this features: >50k')

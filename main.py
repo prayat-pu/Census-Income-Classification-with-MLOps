@@ -29,13 +29,14 @@ class Data(BaseModel):
     hours_per_week: int
     native_country: str
 
+loads = {}
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global model,encoder,cat_features
     # Load the ML model, and other
-    model = pickle.load(open("./model/trained_model.pkl", "rb"))
-    encoder = pickle.load(open("./model/encoder.pkl", "rb"))
-    cat_features = [
+    loads['model'] = pickle.load(open("./model/trained_model.pkl", "rb"))
+    loads['encoder'] = pickle.load(open("./model/encoder.pkl", "rb"))
+    loads['cat_features']  = [
         "workclass",
         "education",
         "marital-status",
@@ -48,9 +49,7 @@ async def lifespan(app: FastAPI):
     
     yield
 
-    del model
-    del encoder
-    del cat_features
+    loads.clear()
 
 app = FastAPI(
     title='Census Classification API',
@@ -87,9 +86,9 @@ async def create_item_for_model_inference(data: Data):
 
     new_df = pd.DataFrame(data_dict)
     x_test, _, _, _ = process_data(
-        new_df, categorical_features=cat_features,
-        training=False, encoder=encoder)
-    prediction = inference(model, x_test)
+        new_df, categorical_features=loads['cat_features'],
+        training=False, encoder=loads['encoder'])
+    prediction = inference(loads['model'], x_test)
 
     if len(prediction) == 1:
         if prediction[0] == 0:
