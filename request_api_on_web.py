@@ -6,20 +6,20 @@ test_data1 = {
     'workclass': ' Private',
     'fnlgt': 133503,
     'education': ' Some-college',
-    'education_num': 10,
-    'marital_status': ' Divorced',
+    'education-num': 10,
+    'marital-status': ' Divorced',
     'occupation': ' Transport-moving',
     'relationship': ' Not-in-family',
     'race': ' White',
     'sex': ' Male',
-    'capital_gain': 2174,
-    'capital_loss': 0,
-    'hours_per_week': 40,
-    'native_country': ' United-States'
+    'capital-gain': 2174,
+    'capital-loss': 0,
+    'hours-per-week': 40,
+    'native-country': ' United-States'
 }
 
 response1 = requests.post(
-    'https://census-income-classification-with-mlops.onrender.com/features/',
+    'http://127.0.0.1:8000/predict/',
     data=json.dumps(test_data1))
 print('status code: ', response1.status_code)
 print(response1.json())
@@ -30,20 +30,20 @@ test_data2 = {
     'workclass': ' State-gov',
     'fnlgt': 160402,
     'education': ' Bachelors',
-    'education_num': 13,
-    'marital_status': ' Married-civ-spouse',
+    'education-num': 13,
+    'marital-status': ' Married-civ-spouse',
     'occupation': ' Prof-specialty',
     'relationship': ' Husband',
     'race': ' White',
     'sex': ' Male',
-    'capital_gain': 0,
-    'capital_loss': 0,
-    'hours_per_week': 55,
-    'native_country': ' United-States'
+    'capital-gain': 0,
+    'capital-loss': 0,
+    'hours-per-week': 55,
+    'native-country': ' United-States'
 }
 
 response2 = requests.post(
-    'https://census-income-classification-with-mlops.onrender.com/features/',
+    'http://127.0.0.1:8000/predict/',
     data=json.dumps(test_data2))
 print('status code: ', response2.status_code)
 print(response2.json())

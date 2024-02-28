@@ -1,12 +1,19 @@
 import pickle
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 import pandas as pd
 from ml.model import inference
 from ml.data import process_data
+from contextlib import asynccontextmanager
 
+def hyphen_to_underscore(field_name):
+    return f"{field_name}".replace("_", "-")
 
 class Data(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=lambda field_name: hyphen_to_underscore(field_name)
+    )
+
     age: int
     workclass: str
     fnlgt: int
@@ -22,30 +29,12 @@ class Data(BaseModel):
     hours_per_week: int
     native_country: str
 
-
-app = FastAPI(
-    title='Census Classification API',
-    description='An aPI that demonstrates checking\
-          the inference of the census classification',
-    version='1.0.0')
-
-
-@app.get('/')
-async def greeting():
-    return {'greeting': "Welcome to the Census classification API"}
-
-
-@app.post('/features/')
-async def create_item_for_model_inference(data: Data):
-
-    model_filepath = './model/trained_model.pkl'
-    with open(model_filepath, 'rb') as file:
-        model = pickle.load(file)
-
-    encoder_filepath = './model/encoder.pkl'
-    with open(encoder_filepath, 'rb') as file:
-        encoder = pickle.load(file)
-
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global model,encoder,cat_features
+    # Load the ML model, and other
+    model = pickle.load(open("./model/trained_model.pkl", "rb"))
+    encoder = pickle.load(open("./model/encoder.pkl", "rb"))
     cat_features = [
         "workclass",
         "education",
@@ -56,6 +45,28 @@ async def create_item_for_model_inference(data: Data):
         "sex",
         "native-country",
     ]
+    
+    yield
+
+    del model
+    del encoder
+    del cat_features
+
+app = FastAPI(
+    title='Census Classification API',
+    description='An aPI that demonstrates checking\
+          the inference of the census classification',
+    version='1.0.0',
+    lifespan=lifespan)
+
+
+@app.get('/')
+async def greeting():
+    return {'greeting': "Welcome to the Census classification API"}
+
+
+@app.post('/predict/')
+async def create_item_for_model_inference(data: Data):
 
     data_dict = {
         'age': [data.age],
